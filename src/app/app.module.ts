@@ -5,6 +5,7 @@ import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
 import { SceneComponent } from './scene/scene.component';
 import { MeshParamsComponent } from './mesh-params/mesh-params.component';
+import { MeshDataService } from './mesh-data.service';
 
 
 @NgModule({
@@ -16,7 +17,7 @@ import { MeshParamsComponent } from './mesh-params/mesh-params.component';
   imports: [
     BrowserModule
   ],
-  providers: [],
+  providers: [MeshDataService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

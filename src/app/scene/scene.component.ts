@@ -2,6 +2,7 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Engine, Scene, Scalar, PointLight, Vector3, FreeCamera, ArcRotateCamera, HemisphericLight, MeshBuilder, Color3} from 'babylonjs';
 import { Mesh, AbstractMesh,  HighlightLayer  } from 'babylonjs';
 import { element } from 'protractor';
+import { MeshDataService } from '../mesh-data.service';
 
 @Component({
   selector: 'app-scene',
@@ -22,7 +23,8 @@ export class SceneComponent implements OnInit {
   debug: Mesh;
   selectedMesh: AbstractMesh;
   h1: HighlightLayer;
-  constructor(/*private meshData: MeshDataService*/) {
+  goals = [];
+  constructor(private meshData: MeshDataService) {
   }
 
 
@@ -33,7 +35,7 @@ export class SceneComponent implements OnInit {
   ngOnInit() {
     this.engine = new Engine(this.canvas, true, {stencil: true});
     const scene = new Scene(this.engine);
-    this.h1 = new BABYLON.HighlightLayer('hl1', scene);
+    this.h1 = new HighlightLayer('hl1', scene);
     // Add a camera to the scene and attach it to the canvas
     const camera = new ArcRotateCamera('Camera', Math.PI / 2, Math.PI / 2, 2, Vector3.Zero(), scene);
     camera.attachControl(this.canvas, true);
@@ -45,7 +47,6 @@ export class SceneComponent implements OnInit {
     // This is where you create and manipulate meshes
     const sphere = MeshBuilder.CreateSphere('sphere', {}, scene);
     this.value += sphere.isPickable;
-    // sphere.position.x += 1;
     const sphere2 = MeshBuilder.CreateSphere('sphere', {}, scene);
     sphere2.position.x += 1;
 
@@ -71,6 +72,7 @@ export class SceneComponent implements OnInit {
         this.h1.addMesh(selected.pickedMesh as Mesh, Color3.Green());
         this.selectedMesh = selected.pickedMesh;
         this.debug.position = selected.pickedPoint;
+        this.meshData.setMesh(selected.pickedMesh);
       } else {
         if (this.selectedMesh) {
           this.h1.removeMesh(this.selectedMesh as Mesh);

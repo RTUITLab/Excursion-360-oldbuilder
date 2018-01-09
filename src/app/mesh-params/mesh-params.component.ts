@@ -22,7 +22,8 @@ export class MeshParamsComponent implements OnInit {
       this.params = [
         `X: ${M.position.x}`,
         `Y: ${M.position.y}`,
-        `Z: ${M.position.z}`
+        `Z: ${M.position.z}`,
+        `Rotation X: ${M.rotation.x}`
       ];
     });
   }

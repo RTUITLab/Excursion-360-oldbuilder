@@ -6,13 +6,19 @@ import { AppComponent } from './app.component';
 import { SceneComponent } from './scene/scene.component';
 import { MeshParamsComponent } from './mesh-params/mesh-params.component';
 import { MeshDataService } from './mesh-data.service';
+import { ToolbarComponent } from './toolbar/toolbar.component';
+import { ObjectBrowserComponent } from './object-browser/object-browser.component';
+import { ContentBarComponent } from './content-bar/content-bar.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     SceneComponent,
-    MeshParamsComponent
+    MeshParamsComponent,
+    ToolbarComponent,
+    ObjectBrowserComponent,
+    ContentBarComponent
   ],
   imports: [
     BrowserModule

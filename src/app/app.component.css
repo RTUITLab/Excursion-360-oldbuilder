@@ -17,10 +17,12 @@
     grid-template-rows: 10% auto 30%;
 
 }
-app-scene, app-mesh-params, app-object-browser, app-content-bar{
+app-scene, app-mesh-params, app-object-browser, app-content-bar, app-toolbar{
     border:1px solid rgba(0, 119, 255, 0.795);
     margin: 0mm;
     padding: 0mm;
+    background: rgb(255, 255, 255);
+    
 }
 html{
     min-height: 100%;

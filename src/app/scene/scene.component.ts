@@ -28,10 +28,6 @@ export class SceneComponent implements OnInit {
   goals = [];
   constructor(private meshData: MeshDataService) {
   }
-
-  resize() {
-    this.engine.resize();
-  }
   sendMeshData() {
     // this.meshData.setMeshDatas(['lol', 'lol1']);
   }
@@ -66,6 +62,7 @@ export class SceneComponent implements OnInit {
       scene.render();
     });
 
+
     window.addEventListener('mousemove', () => {
       const selected = scene.pick(scene.pointerX, scene.pointerY, m => m.name !== 'box');
       if (selected.hit) {
@@ -87,19 +84,12 @@ export class SceneComponent implements OnInit {
     let lastTime: number;
     let timeout = false;
     const delta = 500;
-    let str: string = '';
     const resizeFunc = () => {
       if ((Date.now() - lastTime) < delta) {
         setTimeout(resizeFunc, delta);
       } else {
         timeout = false;
-        console.log('End of resize');
-        this.canvas.style.height = '100%';
-        str += `||>${this.canvas.clientWidth} : ${this.canvas.clientHeight}`;
-        this.engine.setSize(this.canvas.clientWidth, this.canvas.clientHeight);
-        str += ` --> ${this.canvas.clientWidth} : ${this.canvas.clientHeight}<||`;
-        this.meshData.setLog(str);
-        this.canvas.style.height = '100%';
+        this.engine.resize();
       }
     };
     window.addEventListener('resize', () => {

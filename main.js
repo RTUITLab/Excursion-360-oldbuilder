@@ -14,6 +14,7 @@ function createWindow () {
 
   win.loadURL(`file://${__dirname}/dist/index.html`)
 
+  win.maximize();
   //// uncomment below to open the DevTools.
   // win.webContents.openDevTools()
 

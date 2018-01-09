@@ -10,7 +10,7 @@ import { MeshDataService } from '../mesh-data.service';
 export class MeshParamsComponent implements OnInit {
 
   params: Array<string>;
-
+  log: string;
   constructor(private meshData: MeshDataService) { }
 
   ngOnInit() {
@@ -25,6 +25,9 @@ export class MeshParamsComponent implements OnInit {
         `Z: ${M.position.z}`,
         `Rotation X: ${M.rotation.x}`
       ];
+    });
+    this.meshData.logsStream.subscribe(L => {
+      this.log = L;
     });
   }
 

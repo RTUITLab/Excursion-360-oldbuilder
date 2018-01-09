@@ -3,6 +3,8 @@ import { Engine, Scene, Scalar, PointLight, Vector3, FreeCamera, ArcRotateCamera
 import { Mesh, AbstractMesh, HighlightLayer } from 'babylonjs';
 import { element } from 'protractor';
 import { MeshDataService } from '../mesh-data.service';
+import { setTimeout } from 'timers';
+import { fail } from 'assert';
 
 @Component({
   selector: 'app-scene',
@@ -26,8 +28,6 @@ export class SceneComponent implements OnInit {
   goals = [];
   constructor(private meshData: MeshDataService) {
   }
-
-
   sendMeshData() {
     // this.meshData.setMeshDatas(['lol', 'lol1']);
   }
@@ -61,9 +61,7 @@ export class SceneComponent implements OnInit {
     this.engine.runRenderLoop(function () { // Register a render loop to repeatedly render the scene
       scene.render();
     });
-    window.addEventListener('resize', () => {
-      this.engine.resize();
-    });
+
 
     window.addEventListener('mousemove', () => {
       const selected = scene.pick(scene.pointerX, scene.pointerY, m => m.name !== 'box');
@@ -83,6 +81,26 @@ export class SceneComponent implements OnInit {
       }
 
     });
+    let lastTime: number;
+    let timeout = false;
+    const delta = 500;
+    const resizeFunc = () => {
+      if ((Date.now() - lastTime) < delta) {
+        setTimeout(resizeFunc, delta);
+      } else {
+        timeout = false;
+        this.engine.resize();
+      }
+    };
+    window.addEventListener('resize', () => {
+      lastTime = new Date().getMilliseconds();
+      if (timeout === false) {
+        timeout = true;
+        setTimeout(resizeFunc, delta);
+      }
+    });
+
   }
+
 
 }

@@ -34,30 +34,10 @@
 }
 
 app-scene, app-mesh-params, app-object-browser, app-content-bar, app-toolbar, app-hierarchy-bar {
-    border: 2px inset #ffff;
+    border: 2px solid;
     margin: 0mm;
     padding: 0mm;
-    /* background: rgb(255, 255, 255); */
-}
-
-app-toolbar {
-    background: #29ABE2;
-}
-
-app-content-bar {
-    background: #cfbcab;
-}
-
-app-hierarchy-bar {
-    background: #00FF00;
-}
-
-app-mesh-params {
-    background: rgb(248, 190, 224);
-}
-
-app-object-browser {
-    background: #FFFF00;
+    background: #303030;
 }
 
 html {
@@ -67,4 +47,8 @@ html {
 
 body {
     height: 100%;
+}
+
+text {
+    color: #ffff;
 }

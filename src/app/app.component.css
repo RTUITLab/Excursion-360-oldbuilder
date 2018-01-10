@@ -1,6 +1,10 @@
+.inner-contentbar{
+    display: grid;
+    grid-template-rows: auto 27%;
+}
 .inner-container{
     display: grid;
-    grid-template-columns: 17% auto 15%;
+    grid-template-columns: 17% auto;
 }
 .general-container{
     height: 100%;
@@ -14,7 +18,7 @@
     z-index: -1;
     /* border: 1px solid black; */
     display: grid;
-    grid-template-rows: auto 30%;
+    grid-template-columns: auto 15%;
 
 }
 .toolbar-scene{
@@ -38,7 +42,7 @@ app-toolbar{
 }
 
 app-content-bar{
-    background: #998675;
+    background: #cfbcab;
 }
 
 app-hierarchy-bar{

@@ -26,6 +26,8 @@ export class SceneComponent implements OnInit {
   selectedMesh: AbstractMesh;
   h1: HighlightLayer;
   goals = [];
+  camera: FreeCamera;
+  sphere: Mesh;
   constructor(private meshData: MeshDataService) {
   }
   sendMeshData() {
@@ -37,16 +39,16 @@ export class SceneComponent implements OnInit {
     const scene = new Scene(this.engine);
     this.h1 = new HighlightLayer('hl1', scene);
     // Add a camera to the scene and attach it to the canvas
-    const camera = new ArcRotateCamera('Camera', Math.PI / 2, Math.PI / 2, 2, Vector3.Zero(), scene);
+    const camera = new FreeCamera('Camera', new Vector3(-4, 6, 2), scene);
     camera.attachControl(this.canvas, true);
-
+    this.camera = camera;
     // Add lights to the scene
     const light1 = new HemisphericLight('light1', new Vector3(1, 1, 0), scene);
     const light2 = new PointLight('light2', new Vector3(0, 1, -1), scene);
 
     // This is where you create and manipulate meshes
     const sphere = MeshBuilder.CreateSphere('sphere', {}, scene);
-    this.value += sphere.isPickable;
+    this.sphere = sphere;
     const sphere2 = MeshBuilder.CreateSphere('sphere', {}, scene);
     sphere2.position.x += 1;
 
@@ -57,7 +59,7 @@ export class SceneComponent implements OnInit {
     const debug = MeshBuilder.CreateBox('box', { size: 0.1 });
     debug.position.y += 2;
     this.debug = debug;
-    camera.setTarget(sphere.position);
+    camera.setTarget(this.sphere.position);
     this.engine.runRenderLoop(function () { // Register a render loop to repeatedly render the scene
       scene.render();
     });

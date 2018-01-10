@@ -8,27 +8,9 @@ import { MeshDataService } from '../mesh-data.service';
   styleUrls: ['./mesh-params.component.css']
 })
 export class MeshParamsComponent implements OnInit {
-
-  params: Array<string>;
-  log: string;
-  constructor(private meshData: MeshDataService) { }
+  constructor() { }
 
   ngOnInit() {
-    //  this.meshData.goal.subscribe(r => this.params = r);
-    this.meshData.meshStream.subscribe(M => {
-      if (!M) {
-        return;
-      }
-      this.params = [
-        `X: ${M.position.x}`,
-        `Y: ${M.position.y}`,
-        `Z: ${M.position.z}`,
-        `Rotation X: ${M.rotation.x}`
-      ];
-    });
-    this.meshData.logsStream.subscribe(L => {
-      this.log = L;
-    });
   }
 
 }

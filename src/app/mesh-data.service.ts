@@ -13,7 +13,7 @@ export class MeshDataService {
 
   constructor() {
   }
-  
+
   setLog(log: string) {
     this.logs.next(log);
   }

@@ -1,0 +1,15 @@
+.vector3 {
+    display: grid;
+    grid-template-columns: 30% repeat(6, auto);
+}
+
+.pair {
+    display: grid;
+    grid-template-columns: 30% auto;
+    align-items: center;
+}
+
+input {
+    width: 80%;
+    height: 30px;
+}

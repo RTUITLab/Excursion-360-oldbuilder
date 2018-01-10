@@ -1,3 +1,4 @@
+import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
@@ -10,6 +11,7 @@ import { ToolbarComponent } from './toolbar/toolbar.component';
 import { ObjectBrowserComponent } from './object-browser/object-browser.component';
 import { ContentBarComponent } from './content-bar/content-bar.component';
 import { HierarchyBarComponent } from './hierarchy-bar/hierarchy-bar.component';
+import { Vector3Component } from '../Components/vector3/vector3.component';
 
 
 @NgModule({
@@ -20,10 +22,12 @@ import { HierarchyBarComponent } from './hierarchy-bar/hierarchy-bar.component';
     ToolbarComponent,
     ObjectBrowserComponent,
     ContentBarComponent,
-    HierarchyBarComponent
+    HierarchyBarComponent,
+    Vector3Component
   ],
   imports: [
-    BrowserModule
+    BrowserModule,
+    FormsModule
   ],
   providers: [MeshDataService],
   bootstrap: [AppComponent]

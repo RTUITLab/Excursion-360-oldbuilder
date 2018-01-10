@@ -13,3 +13,8 @@ input {
     width: 80%;
     height: 30px;
 }
+
+p {
+    margin-left: 10%;
+    font-size: 120%;
+}

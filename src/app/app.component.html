@@ -1,10 +1,16 @@
 <div class="general-container">
-
-    <app-toolbar></app-toolbar>
     <div class="inner-container">
-        <app-object-browser></app-object-browser>
-        <app-scene></app-scene>
+        <div class="object-scene-container">
+            <app-object-browser></app-object-browser>
+            <div class="toolbar-scene">
+                <app-toolbar></app-toolbar>
+                <app-scene></app-scene>
+            </div>
+        </div>
+        <app-content-bar></app-content-bar>
+    </div>
+    <div class="hierarchy-meshparams-container">
+        <app-hierarchy-bar></app-hierarchy-bar>
         <app-mesh-params></app-mesh-params>
     </div>
-    <app-content-bar></app-content-bar>
 </div>

@@ -9,6 +9,7 @@ import { MeshDataService } from './mesh-data.service';
 import { ToolbarComponent } from './toolbar/toolbar.component';
 import { ObjectBrowserComponent } from './object-browser/object-browser.component';
 import { ContentBarComponent } from './content-bar/content-bar.component';
+import { HierarchyBarComponent } from './hierarchy-bar/hierarchy-bar.component';
 
 
 @NgModule({
@@ -18,7 +19,8 @@ import { ContentBarComponent } from './content-bar/content-bar.component';
     MeshParamsComponent,
     ToolbarComponent,
     ObjectBrowserComponent,
-    ContentBarComponent
+    ContentBarComponent,
+    HierarchyBarComponent
   ],
   imports: [
     BrowserModule

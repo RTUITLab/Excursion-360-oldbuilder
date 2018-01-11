@@ -1,6 +1,6 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { Engine, Scene, Scalar, PointLight, Vector3, FreeCamera, ArcRotateCamera, HemisphericLight, MeshBuilder, PointerEventTypes } from 'babylonjs';
-import { Color3, MeshAssetTask } from 'babylonjs';
+import { Engine, Scene, Scalar, PointLight, Vector3, FreeCamera, ArcRotateCamera, HemisphericLight } from 'babylonjs';
+import { Color3, MeshAssetTask, MeshBuilder, PointerEventTypes } from 'babylonjs';
 import { Mesh, AbstractMesh, HighlightLayer } from 'babylonjs';
 import { element } from 'protractor';
 import { MeshDataService } from '../mesh-data.service';
@@ -20,13 +20,28 @@ export class SceneComponent implements OnInit {
     console.log(this.canvasRef.nativeElement);
     return this.canvasRef.nativeElement;
   }
-  value: string = '';
-  log: string;
   engine: Engine;
   scene: Scene;
-  selectedMesh: AbstractMesh;
+  private _selectedMesh: Mesh;
+  get selectedMesh(): Mesh {
+    return this._selectedMesh;
+  }
+  set selectedMesh(value: Mesh) {
+    if (!value) {
+      if (!this._selectedMesh) { return; }
+      this.h1.removeMesh(this._selectedMesh);
+      this._selectedMesh = undefined;
+      this.meshData.setMesh(undefined);
+      return;
+    }
+    if (this._selectedMesh) {
+      this.h1.removeMesh(this._selectedMesh);
+    }
+    this._selectedMesh = value;
+    this.meshData.setMesh(value);
+    this.h1.addMesh(value, Color3.Red());
+  }
   h1: HighlightLayer2;
-  goals = [];
   camera: FreeCamera;
   sphere: Mesh;
   constructor(private meshData: MeshDataService) {
@@ -65,7 +80,23 @@ export class SceneComponent implements OnInit {
     this.scene.onPointerObservable.add(E => {
       switch (E.type) {
         case PointerEventTypes.POINTERPICK:
-          this.selectMesh(E.pickInfo.pickedMesh);
+          break;
+        case PointerEventTypes.POINTERDOWN:
+          console.log('down');
+          const pickUp = this.scene.pick(this.scene.pointerX, this.scene.pointerY);
+          if (pickUp.hit) {
+            this.selectedMesh = E.pickInfo.pickedMesh as Mesh;
+            return;
+          }
+          if (!pickUp.hit || pickUp.pickedMesh !== this.selectedMesh) {
+            const x = this.scene.pointerX;
+            const y = this.scene.pointerY;
+            setTimeout(() => {
+              if (this.scene.pointerX === x && this.scene.pointerY === y) {
+                this.selectedMesh = undefined;
+              }
+            }, 50);
+          }
           break;
         case PointerEventTypes.POINTERMOVE:
           const pick = this.scene.pick(this.scene.pointerX, this.scene.pointerY);
@@ -103,13 +134,5 @@ export class SceneComponent implements OnInit {
       }
     });
 
-  }
-  private selectMesh(mesh: AbstractMesh): void {
-    if (this.selectedMesh) {
-      this.h1.removeMesh(this.selectedMesh as Mesh);
-    }
-    this.selectedMesh = mesh;
-    this.meshData.setMesh(mesh);
-    this.h1.addMesh(mesh as Mesh, Color3.Red());
   }
 }

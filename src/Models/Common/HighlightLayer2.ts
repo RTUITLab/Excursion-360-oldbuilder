@@ -15,6 +15,6 @@ export class HighlightLayer2 extends HighlightLayer {
     }
     removeMesh(mesh: Mesh): void {
         super.removeMesh(mesh);
-        this.meshes.splice(this.meshes.indexOf(mesh), 1); 
+        this.meshes.splice(this.meshes.indexOf(mesh), 1);
     }
 }

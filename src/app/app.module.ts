@@ -16,6 +16,7 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatTabsModule } from '@angular/material/tabs';
 import { ConsoleComponent } from './console/console.component';
+import { LoggerService } from './logger.service';
 
 
 @NgModule({
@@ -37,7 +38,7 @@ import { ConsoleComponent } from './console/console.component';
     MatCheckboxModule,
     MatTabsModule
   ],
-  providers: [MeshDataService],
+  providers: [MeshDataService, LoggerService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { setInterval } from 'timers';
+import { LoggerService } from '../logger.service';
 
 @Component({
   selector: 'app-console',
@@ -8,12 +9,16 @@ import { setInterval } from 'timers';
 })
 export class ConsoleComponent implements OnInit {
 
-  constructor() { }
+  constructor(private _logger: LoggerService) { }
 
-  log: string = '';
+  // TODO Do selector from rows to public
+  private logrows: Array<string> = [];
+  publicLogs: Array<string> = [];
 
   ngOnInit() {
-    setInterval(() => this.log += '||||||||||||||||||||||||||||||||||||', 500);
+    this._logger.logs.subscribe(L => {
+      this.publicLogs.push(L);
+    });
   }
 
 }

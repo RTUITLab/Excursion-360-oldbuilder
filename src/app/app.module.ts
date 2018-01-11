@@ -18,7 +18,6 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { ConsoleComponent } from './console/console.component';
 import { LoggerService } from './logger.service';
 
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -29,7 +28,7 @@ import { LoggerService } from './logger.service';
     ContentBarComponent,
     HierarchyBarComponent,
     Vector3Component,
-    ConsoleComponent
+    ConsoleComponent,
   ],
   imports: [
     BrowserModule,

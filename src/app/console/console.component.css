@@ -1,4 +1,8 @@
 p {
     color: black;
     word-wrap: break-word;
+    margin: 0;
+}
+
+.logDiv {   
 }

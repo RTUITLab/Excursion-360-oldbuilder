@@ -8,12 +8,31 @@ export class LoggerService {
   private _logs = new BehaviorSubject<string>('init message');
   public logs = this._logs.asObservable();
   constructor() {
-    // setInterval(() => this.log('sd'), 1000);
+    setTimeout(() => {
+      this.log('sd');
+      this.log('sd');
+      this.log('sd');
+      this.log('sd');
+      this.log('sd');
+      this.log('sd');
+      this.log('sd');
+      this.log('sd');
+      this.log('sd');
+      this.log('sd');
+      this.log('sd');
+      this.log('sd');
+      this.log('sd');
+      this.log('sd');
+      this.log('sd');
+      this.log('sd');
+      this.log('sd');
+      this.log('sd');
+      
+    }, 3000);
   }
 
 
   public log(message: string): void {
-    const date = new Date();
-    this._logs.next(`${date.getHours()}:${date.getMinutes()}:${date.getSeconds()} - ${message}`);
+    this._logs.next(`${new Date().toLocaleTimeString()} - ${message}`);
   }
 }

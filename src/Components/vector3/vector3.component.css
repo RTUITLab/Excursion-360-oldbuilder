@@ -1,6 +1,15 @@
 .vector3 {
     display: grid;
+    margin-left: 3%;
+    margin-right: 3%;
+    /* grid-template-columns: 30% repeat(6, auto); */
+}
+
+.position {
+    display: grid;
+    background-color: rgba(103, 97, 128, 0.377);
     grid-template-columns: 30% repeat(6, auto);
+    border: 2px solid rgba(0, 0, 0, 0.24);
 }
 
 .pair {
@@ -12,4 +21,18 @@
 input {
     width: 80%;
     height: 30px;
+}
+
+p {
+    margin: 0;
+    margin-left: 10%;
+    font-size: 120%;
+}
+
+.myinp{
+    padding-left: 10%;
+    margin-left: 15%;
+    border: 3px solid;
+    height: 75%;
+    width: 40%;
 }

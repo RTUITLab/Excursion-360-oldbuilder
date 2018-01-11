@@ -52,6 +52,10 @@ app-toolbar, app-content-bar {
     border-left: 2px solid;
     border-right: 2px solid;
 }
+mat-tab-group, mat-tab-body-wrapper {
+    height: 100%;
+}
+
 
 html {
     min-height: 100%;

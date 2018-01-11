@@ -7,7 +7,16 @@
                 <app-scene></app-scene>
             </div>
         </div>
-        <app-content-bar></app-content-bar>
+        <div class="tabs">
+            <mat-tab-group>
+                <mat-tab label="Content">
+                    <app-content-bar></app-content-bar>
+                </mat-tab>
+                <mat-tab label="Console">
+                    <app-console></app-console>
+                </mat-tab>
+            </mat-tab-group>
+        </div>
     </div>
     <div class="hierarchy-meshparams-container">
         <app-hierarchy-bar></app-hierarchy-bar>

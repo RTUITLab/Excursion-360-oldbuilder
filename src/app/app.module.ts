@@ -12,6 +12,10 @@ import { ObjectBrowserComponent } from './object-browser/object-browser.componen
 import { ContentBarComponent } from './content-bar/content-bar.component';
 import { HierarchyBarComponent } from './hierarchy-bar/hierarchy-bar.component';
 import { Vector3Component } from '../Components/vector3/vector3.component';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatTabsModule } from '@angular/material/tabs';
+import { ConsoleComponent } from './console/console.component';
 
 
 @NgModule({
@@ -23,11 +27,15 @@ import { Vector3Component } from '../Components/vector3/vector3.component';
     ObjectBrowserComponent,
     ContentBarComponent,
     HierarchyBarComponent,
-    Vector3Component
+    Vector3Component,
+    ConsoleComponent
   ],
   imports: [
     BrowserModule,
-    FormsModule
+    FormsModule,
+    NoopAnimationsModule,
+    MatCheckboxModule,
+    MatTabsModule
   ],
   providers: [MeshDataService],
   bootstrap: [AppComponent]

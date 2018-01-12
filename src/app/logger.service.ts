@@ -7,29 +7,7 @@ export class LoggerService {
 
   private _logs = new BehaviorSubject<string>('init message');
   public logs = this._logs.asObservable();
-  constructor() {
-    setTimeout(() => {
-      this.log('sd');
-      this.log('sd');
-      this.log('sd');
-      this.log('sd');
-      this.log('sd');
-      this.log('sd');
-      this.log('sd');
-      this.log('sd');
-      this.log('sd');
-      this.log('sd');
-      this.log('sd');
-      this.log('sd');
-      this.log('sd');
-      this.log('sd');
-      this.log('sd');
-      this.log('sd');
-      this.log('sd');
-      this.log('sd');
-      
-    }, 3000);
-  }
+  constructor() {}
 
 
   public log(message: string): void {

@@ -1,5 +1,5 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { Engine, Scene, Scalar, PointLight, Vector3, FreeCamera, ArcRotateCamera, HemisphericLight } from 'babylonjs';
+import { Engine, Scene, Scalar, PointLight, Vector3, FreeCamera, ArcRotateCamera, HemisphericLight, Vector2 } from 'babylonjs';
 import { Color3, MeshAssetTask, MeshBuilder, PointerEventTypes } from 'babylonjs';
 import { Mesh, AbstractMesh, HighlightLayer } from 'babylonjs';
 import { element } from 'protractor';
@@ -7,6 +7,7 @@ import { MeshDataService } from '../mesh-data.service';
 import { setTimeout } from 'timers';
 import { fail } from 'assert';
 import { HighlightLayer2 } from '../../Models/Common/HighlightLayer2';
+import { LoggerService } from '../logger.service';
 
 @Component({
   selector: 'app-scene',
@@ -23,32 +24,41 @@ export class SceneComponent implements OnInit {
   engine: Engine;
   scene: Scene;
   private _selectedMesh: Mesh;
-  get selectedMesh(): Mesh {
-    return this._selectedMesh;
+
+  h1: HighlightLayer2;
+  camera: FreeCamera;
+  sphere: Mesh;
+
+  constructor(private meshData: MeshDataService, private logger: LoggerService) {
   }
-  set selectedMesh(value: Mesh) {
-    if (!value) {
+
+  private setMesh(mesh: Mesh) {
+    if (this._selectedMesh !== mesh) {
+      this.meshData.setMesh(mesh);
+    }
+  }
+
+  highlightMesh(mesh: Mesh) {
+    if (!mesh) {
       if (!this._selectedMesh) { return; }
       this.h1.removeMesh(this._selectedMesh);
       this._selectedMesh = undefined;
-      this.meshData.setMesh(undefined);
       return;
     }
     if (this._selectedMesh) {
       this.h1.removeMesh(this._selectedMesh);
     }
-    this._selectedMesh = value;
-    this.meshData.setMesh(value);
-    this.h1.addMesh(value, Color3.Red());
+    this._selectedMesh = mesh;
+    this.h1.addMesh(mesh, Color3.Red());
   }
-  h1: HighlightLayer2;
-  camera: FreeCamera;
-  sphere: Mesh;
-  constructor(private meshData: MeshDataService) {
-  }
-
 
   ngOnInit() {
+
+    this.meshData.meshStream.subscribe(M => {
+      this.highlightMesh(M as Mesh);
+    }
+    );
+
     this.engine = new Engine(this.canvas, true, { stencil: true });
     const scene = new Scene(this.engine);
     this.scene = scene;
@@ -76,62 +86,41 @@ export class SceneComponent implements OnInit {
     });
 
 
-
+    let mousePos: Vector2 = new Vector2(0, 0);
     this.scene.onPointerObservable.add(E => {
       switch (E.type) {
-        case PointerEventTypes.POINTERPICK:
-          break;
         case PointerEventTypes.POINTERDOWN:
-          console.log('down');
-          const pickUp = this.scene.pick(this.scene.pointerX, this.scene.pointerY);
-          if (pickUp.hit) {
-            this.selectedMesh = E.pickInfo.pickedMesh as Mesh;
+          mousePos = new Vector2(this.scene.pointerX, this.scene.pointerY);
+          break;
+        case PointerEventTypes.POINTERUP:
+          if (!mousePos.equals(new Vector2(this.scene.pointerX, this.scene.pointerY))) {
             return;
           }
-          if (!pickUp.hit || pickUp.pickedMesh !== this.selectedMesh) {
-            const x = this.scene.pointerX;
-            const y = this.scene.pointerY;
-            setTimeout(() => {
-              if (this.scene.pointerX === x && this.scene.pointerY === y) {
-                this.selectedMesh = undefined;
-              }
-            }, 50);
+          const pickUp = this.scene.pick(this.scene.pointerX, this.scene.pointerY);
+          if (pickUp.hit) {
+            this.setMesh(E.pickInfo.pickedMesh as Mesh);
+            return;
+          } else {
+            this.setMesh(undefined);
           }
+
           break;
         case PointerEventTypes.POINTERMOVE:
-          const pick = this.scene.pick(this.scene.pointerX, this.scene.pointerY);
+          const pick = this.scene.pick(this.scene.pointerX, this.scene.pointerY,
+            M => M !== this._selectedMesh);
           this.h1.meshes.forEach(M => {
-            if (M !== this.selectedMesh) {
+            if (M !== this._selectedMesh) {
               this.h1.removeMesh(M as Mesh);
             }
           });
-          if (pick.hit && pick.pickedMesh !== this.selectedMesh) {
+          if (pick.hit) {
             this.h1.addMesh(pick.pickedMesh as Mesh, Color3.Green());
           }
           break;
       }
-      // const selected = scene.pick(scene.pointerX, scene.pointerY, m => m.name !== 'box');
-      // if (selected.hit) {
-      //  this.selectMesh(selected.pickedMesh);
-      // }
     });
-    let lastTime: number;
-    let timeout = false;
-    const delta = 500;
-    const resizeFunc = () => {
-      if ((Date.now() - lastTime) < delta) {
-        setTimeout(resizeFunc, delta);
-      } else {
-        timeout = false;
-        this.engine.resize();
-      }
-    };
     window.addEventListener('resize', () => {
-      lastTime = new Date().getMilliseconds();
-      if (timeout === false) {
-        timeout = true;
-        setTimeout(resizeFunc, delta);
-      }
+      this.engine.resize();
     });
 
   }

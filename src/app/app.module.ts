@@ -17,6 +17,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatTabsModule } from '@angular/material/tabs';
 import { ConsoleComponent } from './console/console.component';
 import { LoggerService } from './logger.service';
+import { TreeModule } from 'angular-tree-component';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import { LoggerService } from './logger.service';
     FormsModule,
     NoopAnimationsModule,
     MatCheckboxModule,
-    MatTabsModule
+    MatTabsModule,
+    TreeModule
   ],
   providers: [MeshDataService, LoggerService],
   bootstrap: [AppComponent]

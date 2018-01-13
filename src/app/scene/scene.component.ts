@@ -78,7 +78,8 @@ export class SceneComponent implements OnInit {
     const cube = MeshBuilder.CreateBox('box', { size: 2 }, scene);
     cube.position.z -= 1;
     sphere2.position.x += 1;
-    // sphere2.isVisible = false;
+    sphere2.parent = sphere;
+    cube.parent = sphere2;
     sphere.position.y += 1;
     sphere2.position.y += 1;
 

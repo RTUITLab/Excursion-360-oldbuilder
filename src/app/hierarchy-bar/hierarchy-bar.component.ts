@@ -5,7 +5,7 @@ import { LoggerService, Logger } from '../logger.service';
 import { read } from 'fs';
 import { ViewChild } from '@angular/core';
 import { TreeModel } from 'angular-tree-component';
-import { Scene } from 'babylonjs';
+import { Scene, Node } from 'babylonjs';
 
 @Component({
   selector: 'app-hierarchy-bar',
@@ -33,7 +33,7 @@ export class HierarchyBarComponent implements OnInit {
       if (!S) { return; }
       this.currentScene = S;
       S.meshes.filter(M => M.parent === undefined).forEach(M => {
-        this.nodes.push({ id: M.uniqueId, name: M.name, });
+        this.nodes.push(this.handleBabylonNode(M));
       });
     });
     this.sceneState.selectMeshStream.subscribe(M => {
@@ -45,13 +45,46 @@ export class HierarchyBarComponent implements OnInit {
         return;
       }
       const someNode = this.tree.getNodeById(M.uniqueId) as ITreeNode;
-      someNode.setIsActive(true);
+      if (!someNode.isActive) {
+        someNode.setIsActive(true);
+      }
+      if (!someNode.isExpanded) {
+        let n = someNode;
+        while (n) {
+          n.expand();
+          n = n.parent;
+        }
+      }
     });
   }
-  onEvent(val) {
+  onActivate(val) {
     const selectedNode: ITreeNode = val.node;
     const selectedMesh = this.currentScene.getMeshByUniqueID(selectedNode.id as number);
     this.sceneState.selectMesh(selectedMesh);
+  }
+
+  onMove(val) {
+    const movedNode = val.node as ITreeNode;
+    const parentNode = val.to.parent as ITreeNode;
+    const movedObject = this.currentScene.getMeshByUniqueID(movedNode.id as number);
+    if (parentNode.isRoot) {
+      movedObject.parent = undefined;
+      return;
+    }
+    const newParent = this.currentScene.getMeshByUniqueID(parentNode.id as number);
+    movedObject.parent = newParent;
+  }
+
+  handleBabylonNode(babNode: Node): TreeNode {
+    const node: TreeNode = {
+      id: babNode.uniqueId,
+      name: babNode.name,
+      children: []
+    };
+    babNode.getChildren().forEach(C => {
+      node.children.push(this.handleBabylonNode(C));
+    });
+    return node;
   }
 }
 interface TreeNode {

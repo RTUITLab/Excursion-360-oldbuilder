@@ -1,2 +1,3 @@
 <h1 class="title">Details Bar</h1>
-<app-vector3 param="position"></app-vector3>
+<p *ngIf="pairs.length === 0; else meshBar">Not selected object</p>
+<ng-template #meshBar appMesh></ng-template>

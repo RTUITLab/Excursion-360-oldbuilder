@@ -2,5 +2,9 @@
   Hierarchy Bar
 </h1>
 <div class="treeDiv">
-  <tree-root [nodes]="nodes" [options]="options"></tree-root>
+  <tree-root #myTree 
+    (activate)="onActivate($event)" 
+    (moveNode)="onMove($event)"
+    [nodes]="nodes" 
+    [options]="options"></tree-root>
 </div>

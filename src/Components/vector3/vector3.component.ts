@@ -1,6 +1,7 @@
-import { MeshDataService } from '../../app/mesh-data.service';
 import { Component, Input, OnInit } from '@angular/core';
 import { AbstractMesh, Mesh, Vector3 } from 'babylonjs';
+import { LoggerService } from '../../app/logger.service';
+import { SceneStateService } from '../../app/scene-state.service';
 
 @Component({
   selector: 'app-vector3',
@@ -8,10 +9,11 @@ import { AbstractMesh, Mesh, Vector3 } from 'babylonjs';
   styleUrls: ['./vector3.component.css']
 })
 export class Vector3Component implements OnInit {
-  @Input() param: string;
-  private vector: Vector3;
-  constructor(private meshStream: MeshDataService) { }
+  vector: Vector3;
+  @Input()
+  vectorName: string;
 
+  constructor(private logger: LoggerService) { }
   get X(): number {
     if (this.vector) {
       return this.vector.x;
@@ -40,10 +42,6 @@ export class Vector3Component implements OnInit {
   }
 
   ngOnInit() {
-    this.meshStream.meshStream.subscribe(M => {
-      if (!M) { console.log('nothing'); return; }
-      this.vector = M[this.param] as Vector3;
-    });
   }
 
 }

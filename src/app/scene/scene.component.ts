@@ -75,7 +75,7 @@ export class SceneComponent implements OnInit {
     const sphere = MeshBuilder.CreateSphere('sphere', {}, scene);
     this.sphere = sphere;
     const sphere2 = MeshBuilder.CreateSphere('sphere', {}, scene);
-    const cube = MeshBuilder.CreateBox('box', {size: 2}, scene);
+    const cube = MeshBuilder.CreateBox('box', { size: 2 }, scene);
     cube.position.z -= 1;
     sphere2.position.x += 1;
     // sphere2.isVisible = false;
@@ -86,7 +86,7 @@ export class SceneComponent implements OnInit {
     this.engine.runRenderLoop(function () { // Register a render loop to repeatedly render the scene
       scene.render();
     });
-
+    this.sceneState.setScene(scene);
 
     let mousePos: Vector2 = new Vector2(0, 0);
     this.scene.onPointerObservable.add(E => {

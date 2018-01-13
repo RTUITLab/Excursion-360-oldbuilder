@@ -1,4 +1,11 @@
 import { Component, OnInit } from '@angular/core';
+import { ITreeOptions, ITreeNode } from 'angular-tree-component/dist/defs/api';
+import { SceneStateService } from '../scene-state.service';
+import { LoggerService, Logger } from '../logger.service';
+import { read } from 'fs';
+import { ViewChild } from '@angular/core';
+import { TreeModel } from 'angular-tree-component';
+import { Scene } from 'babylonjs';
 
 @Component({
   selector: 'app-hierarchy-bar',
@@ -6,35 +13,49 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./hierarchy-bar.component.css']
 })
 export class HierarchyBarComponent implements OnInit {
-
-  nodes = [
-    {
-      id: 1,
-      name: 'root1',
-      children: [
-        { id: 2, name: 'child1' },
-        { id: 3, name: 'child2' }
-      ]
-    },
-    {
-      id: 4,
-      name: 'root2',
-      children: [
-        { id: 5, name: 'child2.1' },
-        {
-          id: 6,
-          name: 'child2.2',
-          children: [
-            { id: 7, name: 'subsub' }
-          ]
-        }
-      ]
-    }
-  ];
-  options = {};
-  constructor() { }
-
-  ngOnInit() {
+  private logger: Logger;
+  private currentScene: Scene;
+  nodes: TreeNode[];
+  options: ITreeOptions = {
+    allowDrag: true,
+    allowDrop: true
+  };
+  @ViewChild('myTree') treeHtml;
+  private tree: TreeModel;
+  constructor(private sceneState: SceneStateService, private loggerService: LoggerService) {
   }
 
+  ngOnInit() {
+    this.logger = this.loggerService.getLogger(HierarchyBarComponent);
+    this.tree = this.treeHtml.treeModel;
+    this.sceneState.currentSceneStram.subscribe(S => {
+      this.nodes = [];
+      if (!S) { return; }
+      this.currentScene = S;
+      S.meshes.filter(M => M.parent === undefined).forEach(M => {
+        this.nodes.push({ id: M.uniqueId, name: M.name, });
+      });
+    });
+    this.sceneState.selectMeshStream.subscribe(M => {
+      if (!M) {
+        this.tree.activeNodes.forEach((N: ITreeNode) => {
+          N.setIsActive(false);
+          N.blur();
+        });
+        return;
+      }
+      const someNode = this.tree.getNodeById(M.uniqueId) as ITreeNode;
+      someNode.setIsActive(true);
+    });
+  }
+  onEvent(val) {
+    const selectedNode: ITreeNode = val.node;
+    const selectedMesh = this.currentScene.getMeshByUniqueID(selectedNode.id as number);
+    this.sceneState.selectMesh(selectedMesh);
+  }
+}
+interface TreeNode {
+  id: number;
+  name: string;
+  children?: TreeNode[];
 }

@@ -3,11 +3,12 @@ import { Engine, Scene, Scalar, PointLight, Vector3, FreeCamera, ArcRotateCamera
 import { Color3, MeshAssetTask, MeshBuilder, PointerEventTypes } from 'babylonjs';
 import { Mesh, AbstractMesh, HighlightLayer } from 'babylonjs';
 import { element } from 'protractor';
-import { MeshDataService } from '../mesh-data.service';
 import { setTimeout } from 'timers';
 import { fail } from 'assert';
 import { HighlightLayer2 } from '../../Models/Common/HighlightLayer2';
-import { LoggerService } from '../logger.service';
+import { LoggerService, Logger } from '../logger.service';
+import { SceneStateService } from '../scene-state.service';
+import { Type } from '@angular/core';
 
 @Component({
   selector: 'app-scene',
@@ -24,17 +25,17 @@ export class SceneComponent implements OnInit {
   engine: Engine;
   scene: Scene;
   private _selectedMesh: Mesh;
-
+  private logger: Logger;
   h1: HighlightLayer2;
   camera: FreeCamera;
   sphere: Mesh;
 
-  constructor(private meshData: MeshDataService, private logger: LoggerService) {
+  constructor(private sceneState: SceneStateService, private loggerService: LoggerService) {
   }
 
   private setMesh(mesh: Mesh) {
     if (this._selectedMesh !== mesh) {
-      this.meshData.setMesh(mesh);
+      this.sceneState.selectMesh(mesh);
     }
   }
 
@@ -53,11 +54,10 @@ export class SceneComponent implements OnInit {
   }
 
   ngOnInit() {
-
-    this.meshData.meshStream.subscribe(M => {
+    this.logger = this.loggerService.getLogger(SceneComponent);
+    this.sceneState.selectMeshStream.subscribe(M => {
       this.highlightMesh(M as Mesh);
-    }
-    );
+    });
 
     this.engine = new Engine(this.canvas, true, { stencil: true });
     const scene = new Scene(this.engine);
@@ -75,6 +75,8 @@ export class SceneComponent implements OnInit {
     const sphere = MeshBuilder.CreateSphere('sphere', {}, scene);
     this.sphere = sphere;
     const sphere2 = MeshBuilder.CreateSphere('sphere', {}, scene);
+    const cube = MeshBuilder.CreateBox('box', {size: 2}, scene);
+    cube.position.z -= 1;
     sphere2.position.x += 1;
     // sphere2.isVisible = false;
     sphere.position.y += 1;

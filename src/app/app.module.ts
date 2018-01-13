@@ -6,7 +6,6 @@ import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
 import { SceneComponent } from './scene/scene.component';
 import { MeshParamsComponent } from './mesh-params/mesh-params.component';
-import { MeshDataService } from './mesh-data.service';
 import { ToolbarComponent } from './toolbar/toolbar.component';
 import { ObjectBrowserComponent } from './object-browser/object-browser.component';
 import { ContentBarComponent } from './content-bar/content-bar.component';
@@ -18,6 +17,8 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { ConsoleComponent } from './console/console.component';
 import { LoggerService } from './logger.service';
 import { TreeModule } from 'angular-tree-component';
+import { SceneStateService } from './scene-state.service';
+import { MeshDirective } from './mesh.directive';
 
 @NgModule({
   declarations: [
@@ -30,6 +31,7 @@ import { TreeModule } from 'angular-tree-component';
     HierarchyBarComponent,
     Vector3Component,
     ConsoleComponent,
+    MeshDirective,
   ],
   imports: [
     BrowserModule,
@@ -39,7 +41,8 @@ import { TreeModule } from 'angular-tree-component';
     MatTabsModule,
     TreeModule
   ],
-  providers: [MeshDataService, LoggerService],
-  bootstrap: [AppComponent]
+  providers: [LoggerService, SceneStateService],
+  bootstrap: [AppComponent],
+  entryComponents: [Vector3Component]
 })
 export class AppModule { }

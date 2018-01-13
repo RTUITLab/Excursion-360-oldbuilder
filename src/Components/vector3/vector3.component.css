@@ -1,21 +1,40 @@
 .vector3 {
+    background-color: rgba(103, 97, 128, 0.377);
+    border: 2px solid rgba(0, 0, 0, 0.24);
     display: grid;
     margin-left: 3%;
     margin-right: 3%;
-    /* grid-template-columns: 30% repeat(6, auto); */
+    grid-template-columns: 30% repeat(3, auto);
+    grid-template-areas: "name valX valY valZ"
 }
-
+div {
+    /* border: 1px solid white; */
+}
 .position {
     display: grid;
-    background-color: rgba(103, 97, 128, 0.377);
     grid-template-columns: 30% repeat(6, auto);
-    border: 2px solid rgba(0, 0, 0, 0.24);
 }
 
 .pair {
     display: grid;
     grid-template-columns: 30% auto;
-    align-items: center;
+    align-items: initial;
+}
+
+.vecName {
+    grid-area: name;
+}
+
+.valX {
+    grid-area: valX;
+}
+
+.valY {
+    grid-area: valY;
+}
+
+.valZ {
+    grid-area: valZ;
 }
 
 input {
@@ -29,10 +48,29 @@ p {
     font-size: 120%;
 }
 
-.myinp{
+.myinp {
     padding-left: 10%;
     margin-left: 15%;
     border: 3px solid;
     height: 75%;
-    width: 40%;
+    width: 60%;
+}
+
+@media screen and (max-width: 1800px) {
+    .vector3 {
+        grid-template-columns: repeat(3, auto);
+        grid-template-areas: 
+            "name name name"
+            "valX valY valZ"
+    }
+}
+@media screen and (max-width: 1000px) {
+    .vector3 {
+        grid-template-columns: auto;
+        grid-template-areas:
+            "name"
+            "valX"
+            "valY" 
+            "valZ"
+    }
 }

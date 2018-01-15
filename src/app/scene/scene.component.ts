@@ -93,6 +93,7 @@ export class SceneComponent implements OnInit {
     this.scene.onPointerObservable.add(E => {
       switch (E.type) {
         case PointerEventTypes.POINTERDOWN:
+          this.logger.log('azazaz');
           mousePos = new Vector2(this.scene.pointerX, this.scene.pointerY);
           break;
         case PointerEventTypes.POINTERUP:

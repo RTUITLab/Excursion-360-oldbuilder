@@ -31,7 +31,7 @@ import { MeshDirective } from './mesh.directive';
     HierarchyBarComponent,
     Vector3Component,
     ConsoleComponent,
-    MeshDirective,
+    MeshDirective
   ],
   imports: [
     BrowserModule,

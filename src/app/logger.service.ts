@@ -6,9 +6,13 @@ import { Type } from '@angular/core';
 @Injectable()
 export class LoggerService {
   private _logs = new BehaviorSubject<string>('init message');
+  public allLogs: Array<string> = [];
   public logs = this._logs.asObservable();
   getLogger(invokerType: Type<any>) {
-    return new Logger(invokerType, (A) => { this._logs.next(A); });
+    return new Logger(invokerType, (A) => {
+      this.allLogs.push(A);
+      this._logs.next(A);
+    });
   }
 }
 

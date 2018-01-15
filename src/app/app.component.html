@@ -1,25 +1,17 @@
 <div class="general-container">
-    <div class="inner-container">
-        <div class="object-scene-container">
-            <app-object-browser></app-object-browser>
-            <div class="toolbar-scene">
-                <app-toolbar></app-toolbar>
-                <app-scene></app-scene>
-            </div>
+    <app-object-browser></app-object-browser>
+    <app-toolbar></app-toolbar>
+    <app-scene></app-scene>
+    <div class="tabs">
+        <div class="buttons">
+            <button (click)="tabNow = 'console'">Console</button>
+            <button (click)="tabNow = 'contentBar'">Content Bar</button>
         </div>
-        <div class="tabs">
-            <mat-tab-group #someName>
-                <mat-tab label="Console">
-                    <app-console></app-console>
-                </mat-tab>
-                <mat-tab label="Content">
-                    <app-content-bar></app-content-bar>
-                </mat-tab>
-            </mat-tab-group>
+        <div class="lolka" [ngSwitch]="tabNow">
+            <app-console #consoleId *ngSwitchCase="'console'"></app-console>
+            <app-content-bar *ngSwitchCase="'contentBar'"></app-content-bar>
         </div>
     </div>
-    <div class="hierarchy-meshparams-container">
-        <app-hierarchy-bar></app-hierarchy-bar>
-        <app-mesh-params></app-mesh-params>
-    </div>
+    <app-hierarchy-bar></app-hierarchy-bar>
+    <app-mesh-params></app-mesh-params>
 </div>

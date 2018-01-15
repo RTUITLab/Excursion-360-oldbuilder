@@ -7,7 +7,7 @@
             <button (click)="tabNow = 'console'">Console</button>
             <button (click)="tabNow = 'contentBar'">Content Bar</button>
         </div>
-        <div class="lolka" [ngSwitch]="tabNow">
+        <div class="tabsContent" [ngSwitch]="tabNow">
             <app-console #consoleId *ngSwitchCase="'console'"></app-console>
             <app-content-bar *ngSwitchCase="'contentBar'"></app-content-bar>
         </div>

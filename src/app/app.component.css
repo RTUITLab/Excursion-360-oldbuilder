@@ -1,14 +1,4 @@
-.inner-container {
-    display: grid;
-    grid-template-rows: auto 27%;
-}
-
-.object-scene-container {
-    display: grid;
-    grid-template-columns: 17% auto;
-}
-
-.general-container {
+div.general-container {
     height: 100%;
     width: 100%;
     position: absolute;
@@ -17,19 +7,54 @@
     left: 0;
     right: 0;
     overflow: hidden;
-    z-index: -1;
+    /* z-index: -1; */
     display: grid;
-    grid-template-columns: auto 15%;
+    grid-template-columns: 20% auto 17%;
+    grid-template-rows: 10% auto auto 25%;
+    grid-template-areas: "objBrowser toolbar hierarchy" "objBrowser scene hierarchy" "objBrowser scene meshParams" "tabs tabs meshParams";
 }
 
-.toolbar-scene {
-    display: grid;
-    grid-template-rows: 10% auto;
+
+div.tabs {
+    grid-area: tabs;
+    background: #666;
 }
 
-.hierarchy-meshparams-container {
-    display: grid;
-    grid-template-rows: 50%;
+div.buttons {
+    background: rgb(78, 74, 78);
+    height: 10%;
+}
+div.tabsContent {
+    height: 90%;
+}
+
+app-console {
+    height: 100%;
+    background: #555;
+}
+
+app-object-browser {
+    grid-area: objBrowser
+}
+
+app-toolbar {
+    grid-area: toolbar;
+}
+
+app-scene {
+    grid-area: scene
+}
+
+app-console {
+    overflow-y: auto;
+}
+
+app-hierarchy-bar {
+    grid-area: hierarchy;
+}
+
+app-mesh-params {
+    grid-area: meshParams;
 }
 
 app-scene, app-mesh-params, app-object-browser, app-content-bar, app-toolbar, app-hierarchy-bar {
@@ -52,10 +77,6 @@ app-toolbar, app-content-bar {
     border-left: 2px solid;
     border-right: 2px solid;
 }
-mat-tab-group, mat-tab-body-wrapper {
-    height: 100%;
-}
-
 
 html {
     min-height: 100%;
@@ -65,8 +86,3 @@ html {
 body {
     height: 100%;
 }
-
-.tabs {
-    max-width: 100%;
-}
-

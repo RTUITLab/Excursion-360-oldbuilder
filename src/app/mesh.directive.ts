@@ -7,5 +7,4 @@ import { ViewChild } from '@angular/core';
 export class MeshDirective {
   @ViewChild(MeshDirective) adHost: MeshDirective;
   constructor(public viewContainerRef: ViewContainerRef) { }
-
 }

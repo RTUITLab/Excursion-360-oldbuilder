@@ -9,7 +9,7 @@ import { HighlightLayer2 } from '../../Models/Common/HighlightLayer2';
 import { LoggerService, Logger } from '../logger.service';
 import { SceneStateService } from '../scene-state.service';
 import { Type } from '@angular/core';
-import 'babylonjs-material';
+import 'babylonjs-materials';
 
 
 @Component({

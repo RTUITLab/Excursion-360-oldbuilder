@@ -9,6 +9,8 @@ import { HighlightLayer2 } from '../../Models/Common/HighlightLayer2';
 import { LoggerService, Logger } from '../logger.service';
 import { SceneStateService } from '../scene-state.service';
 import { Type } from '@angular/core';
+import 'babylonjs-materials';
+
 
 @Component({
   selector: 'app-scene',
@@ -63,6 +65,10 @@ export class SceneComponent implements OnInit {
     const scene = new Scene(this.engine);
     this.scene = scene;
     this.h1 = new HighlightLayer2('hl1', scene);
+
+    const ground = BABYLON.MeshBuilder.CreateGround('ground', {width: 30, height: 30}, scene);
+    ground.material = new BABYLON.GridMaterial('groundMaterial', scene);
+
     // Add a camera to the scene and attach it to the canvas
     const camera = new FreeCamera('Camera', new Vector3(-4, 6, 2), scene);
     camera.attachControl(this.canvas, true);

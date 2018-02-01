@@ -10,7 +10,7 @@ export class SceneStateService {
   public selectMeshStream = this._selectedMeshes.asObservable();
 
   private _currentScenes = new BehaviorSubject<Scene>(undefined);
-  public currentSceneStram = this._currentScenes.asObservable();
+  public currentSceneStream = this._currentScenes.asObservable();
 
   public selectMesh(mesh: AbstractMesh): void {
     this._selectedMeshes.next(mesh);

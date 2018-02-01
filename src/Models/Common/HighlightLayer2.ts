@@ -1,20 +1,19 @@
-import { HighlightLayer, Color3, Mesh, IHighlightLayerOptions, Scene } from 'babylonjs';
+import 'babylonjs';
 
-export class HighlightLayer2 extends HighlightLayer {
+export class HighlightLayer2 extends BABYLON.HighlightLayer {
+    meshes: Array<BABYLON.AbstractMesh> = new Array<BABYLON.AbstractMesh>();
 
-    meshes: Array<Mesh> = new Array<Mesh>();
-    /**
-     *
-     */
-    constructor(name: string, scene: Scene, options?: IHighlightLayerOptions) {
-        super(name, scene, options);
+    constructor(name: string, core: BABYLON.Scene, options?: BABYLON.IHighlightLayerOptions) {
+        super(name, core, options);
     }
-    addMesh(mesh: Mesh, color: Color3, glowEmissiveOnly?: boolean): void {
-        super.addMesh(mesh, color, glowEmissiveOnly);
+
+    addMesh(mesh: BABYLON.AbstractMesh, color: BABYLON.Color3, glowEmissiveOnly?: boolean): void {
+        super.addMesh(mesh as BABYLON.Mesh, color, glowEmissiveOnly);
         this.meshes.push(mesh);
     }
-    removeMesh(mesh: Mesh): void {
-        super.removeMesh(mesh);
+
+    removeMesh(mesh: BABYLON.AbstractMesh): void {
+        super.removeMesh(mesh as BABYLON.Mesh);
         this.meshes.splice(this.meshes.indexOf(mesh), 1);
     }
 }

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ITreeOptions, ITreeNode } from 'angular-tree-component/dist/defs/api';
 import { SceneStateService } from '../scene-state.service';
 import { LoggerService, Logger } from '../logger.service';
-import { read } from 'fs';
+// import { read } from 'fs';
 import { ViewChild } from '@angular/core';
 import { TreeModel } from 'angular-tree-component';
 import { Scene, Node } from 'babylonjs';
@@ -28,7 +28,7 @@ export class HierarchyBarComponent implements OnInit {
   ngOnInit() {
     this.logger = this.loggerService.getLogger(HierarchyBarComponent);
     this.tree = this.treeHtml.treeModel;
-    this.sceneState.currentSceneStram.subscribe(S => {
+    this.sceneState.currentSceneStream.subscribe(S => {
       this.nodes = [];
       if (!S) { return; }
       this.currentScene = S;

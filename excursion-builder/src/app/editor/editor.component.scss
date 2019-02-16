@@ -1,0 +1,10 @@
+.container {
+    display: grid;
+    grid-template-columns: 80% auto;
+    grid-template-areas: "scene menu";
+}
+
+.menu {
+    display: grid;
+    grid-template-rows: 5% auto auto;
+}

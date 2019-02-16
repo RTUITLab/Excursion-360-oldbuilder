@@ -1,0 +1,17 @@
+<div class="general-container">
+    <app-object-browser></app-object-browser>
+    <app-toolbar></app-toolbar>
+    <app-scene></app-scene>
+    <div class="tabs">
+        <div class="buttons">
+            <button (click)="tabNow = 'console'">Console</button>
+            <button (click)="tabNow = 'contentBar'">Content Bar</button>
+        </div>
+        <div class="tabsContent" [ngSwitch]="tabNow">
+            <app-console #consoleId *ngSwitchCase="'console'"></app-console>
+            <app-content-bar *ngSwitchCase="'contentBar'"></app-content-bar>
+        </div>
+    </div>
+    <app-hierarchy-bar></app-hierarchy-bar>
+    <app-mesh-params></app-mesh-params>
+</div>

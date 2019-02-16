@@ -1,0 +1,10 @@
+p {
+    color: black;
+    word-wrap: break-word;
+    margin: 0;
+}
+
+div {
+    height: 100%;
+    overflow-y: scroll;
+}
